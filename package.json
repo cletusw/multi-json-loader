@@ -1,0 +1,27 @@
+{
+  "name": "multi-json-loader",
+  "version": "0.1.0",
+  "description": "Webpack loader to load multiple JSON files into one structure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cletusw/multi-json-loader.git"
+  },
+  "keywords": [
+    "json",
+    "webpack"
+  ],
+  "author": "Clayton Watts <cletusw@gmail.com> (https://github.com/cletusw)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cletusw/multi-json-loader/issues"
+  },
+  "homepage": "https://github.com/cletusw/multi-json-loader#readme",
+  "dependencies": {
+    "glob": "^7.0.6",
+    "loader-utils": "^0.2.15"
+  }
+}
