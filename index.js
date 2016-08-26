@@ -8,10 +8,11 @@ module.exports = function() {};
 module.exports.pitch = function() {
   var loaderContext = this;
   var query = loaderUtils.parseQuery(this.query);
-  var absoluteCwd = path.resolve(query.cwd);
+  var absoluteCwd = path.resolve(query.cwd || '');
+  var currentGlob = query.glob || '*.json';
   var results = {};
 
-  glob.sync(query.glob, {
+  glob.sync(currentGlob, {
     cwd: absoluteCwd
   }).forEach(function(filePath) {
     var absoluteFilePath = path.join(absoluteCwd, filePath);
