@@ -1,6 +1,6 @@
 {
   "name": "multi-json-loader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Webpack loader to load multiple JSON files into one structure",
   "main": "index.js",
   "scripts": {
