@@ -37,5 +37,5 @@ module.exports.pitch = function() {
   this.cacheable && this.cacheable();
   this.value = [ results ];
 
-  return 'module.exports = ' + JSON.stringify(results, null, '\t') + ';';
+  return JSON.stringify(results, null, '\t');
 };
