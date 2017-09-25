@@ -3,13 +3,20 @@ var path = require('path');
 var glob = require('glob');
 var loaderUtils = require('loader-utils');
 
-module.exports = function() {};
-
-module.exports.pitch = function() {
-  var loaderContext = this;
+function pitch() {
   var query = loaderUtils.parseQuery(this.query);
-  var absoluteCwd = path.resolve(query.cwd || '');
-  var currentGlob = query.glob || '*.json';
+
+  var results = loadFiles(query.cwd, query.glob, this.addContextDependency.bind(this));
+
+  this.cacheable && this.cacheable();
+  this.value = [ results ];
+
+  return JSON.stringify(results, null, '\t');
+}
+
+function loadFiles(cwd, fileGlob, addContextDependency) {
+  var absoluteCwd = path.resolve(cwd || '');
+  var currentGlob = fileGlob || '*.json';
   var results = {};
 
   glob.sync(currentGlob, {
@@ -19,7 +26,9 @@ module.exports.pitch = function() {
     var parsedAbsoluteFilePath = path.parse(absoluteFilePath);
 
     // Notify webpack of dependency on file's directory (for watching)
-    loaderContext.addContextDependency(parsedAbsoluteFilePath.dir);
+    if (typeof addContextDependency === 'function') {
+      addContextDependency(parsedAbsoluteFilePath.dir);
+    }
 
     // Store file contents at appropriate path in results object
     // Based on https://github.com/messageformat/messageformat.js/blob/v1.0.0-rc.3/bin/messageformat.js#L95-L102
@@ -34,8 +43,9 @@ module.exports.pitch = function() {
     }, results);
   });
 
-  this.cacheable && this.cacheable();
-  this.value = [ results ];
+  return results;
+}
 
-  return JSON.stringify(results, null, '\t');
-};
+module.exports = function() {};
+module.exports.pitch = pitch;
+module.exports.loadFiles = loadFiles;

@@ -61,6 +61,19 @@ var data = require('multi-json-loader?cwd=data&glob=**/*.json!./irrelevant.whate
 
 Note that because I don't understand webpack enough, you have to provide a valid resource file (`./irrelevant.whatever` above) even though it won't actually be loaded.
 
+### Without webpack
+
+You can also use the loader's functionality independent of webpack.
+
+```javascript
+var multiJsonLoader = require('multi-json-loader');
+var messages = multiJsonLoader.loadFiles('./i18n' /*, optional glob - defaults to '*.json'*/);
+console.log(messages);
+// => { a: { 'a-key': 'a-value' }, b: { 'b-key': 'b-value' } }
+```
+
+See `no-webpack-example` subdirectory.
+
 ## Options
 
 * `cwd` The current working directory in which to search. Defaults to `process.cwd()`.
